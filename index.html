@@ -47,15 +47,41 @@ body::before {
 }
 #border-frame svg { display:block;width:100%;height:100%; }
 
-@keyframes drawBorder { to { stroke-dashoffset: 0; } }
-@keyframes fadeIn     { to { opacity: 1; } }
-@keyframes fadeInUp   { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-@keyframes fadeInDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
-@keyframes letterUp   { to { opacity:1; transform:translateY(0) scale(1); } }
-@keyframes growLine   { to { transform:scaleX(1); } }
-@keyframes stemPulse  {
+@keyframes drawBorder    { to { stroke-dashoffset: 0; } }
+@keyframes fadeIn        { to { opacity: 1; } }
+@keyframes fadeInUp      { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInDown    { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes letterUp      { to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes growLine      { to { transform:scaleX(1); } }
+@keyframes stemPulse     {
   0%,100%{opacity:.8;transform:translateY(0)}
   50%    {opacity:.3;transform:translateY(5px)}
+}
+/* continuous border march — offset moves so tiles scroll around perimeter */
+@keyframes marchCW       { from{stroke-dashoffset:0} to{stroke-dashoffset:-880} }
+/* corner medallion slow spin */
+@keyframes spinSlow      { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes spinSlowCCW   { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
+/* ganesha draw-in */
+@keyframes drawGanesha   { to { stroke-dashoffset: 0; } }
+@keyframes ganeshFadeIn  { to { opacity: 1; } }
+
+/* ── Ganesha sketch ── */
+.ganesh-wrap {
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+  opacity:0;
+}
+.ganesh-wrap svg path, .ganesh-wrap svg circle, .ganesh-wrap svg ellipse {
+  fill:none;
+  stroke:#C9A96E;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.ganesh-path {
+  stroke-dasharray:2000;
+  stroke-dashoffset:2000;
+  animation:drawGanesha 3s cubic-bezier(.4,0,.2,1) forwards;
 }
 
 /* ────────────────────────────────────────────
@@ -332,6 +358,104 @@ footer {
 
 <!-- ══ HERO ══ -->
 <section id="hero">
+
+  <!-- Ganesha minimalist sketch -->
+  <div class="ganesh-wrap" id="ganeshWrap">
+    <svg width="110" height="148" viewBox="0 0 110 148" fill="none"
+         xmlns="http://www.w3.org/2000/svg" opacity=".72">
+
+      <!-- === BODY === -->
+      <!-- torso / rounded belly -->
+      <path class="ganesh-path" stroke-width="1.1"
+        d="M35,90 Q28,80 30,68 Q32,55 40,50 Q50,45 55,45 Q62,45 70,50 Q80,56 80,68 Q82,80 74,90 Q68,100 65,112 Q62,120 60,130 Q58,136 55,140 Q52,136 50,130 Q47,120 44,112 Q40,100 35,90 Z"/>
+
+      <!-- navel dot -->
+      <circle class="ganesh-path" cx="55" cy="88" r="2.5" stroke-width="1" style="stroke-dasharray:20;stroke-dashoffset:20;animation:drawGanesha 1s ease 2.8s forwards"/>
+
+      <!-- === HEAD === -->
+      <!-- large elephant head / cranium -->
+      <path class="ganesh-path" stroke-width="1.1" style="animation-delay:.3s"
+        d="M34,44 Q30,35 32,26 Q34,16 42,11 Q49,6 55,6 Q63,6 68,11 Q76,16 78,26 Q80,36 76,44"/>
+
+      <!-- === EARS === -->
+      <!-- left ear — large fan -->
+      <path class="ganesh-path" stroke-width="1" style="animation-delay:.5s"
+        d="M34,44 Q18,40 14,30 Q10,20 18,14 Q26,8 34,16 Q38,20 36,30 Q35,38 34,44 Z"/>
+      <!-- left ear inner detail -->
+      <path class="ganesh-path" stroke-width=".6" opacity=".6" style="animation-delay:.8s;stroke-dasharray:300;stroke-dashoffset:300;animation:drawGanesha 1.5s ease .8s forwards"
+        d="M33,42 Q20,38 17,29 Q14,21 21,16 Q27,12 33,19 Q36,24 35,33"/>
+
+      <!-- right ear — large fan -->
+      <path class="ganesh-path" stroke-width="1" style="animation-delay:.5s"
+        d="M76,44 Q92,40 96,30 Q100,20 92,14 Q84,8 76,16 Q72,20 74,30 Q75,38 76,44 Z"/>
+      <!-- right ear inner detail -->
+      <path class="ganesh-path" stroke-width=".6" opacity=".6" style="animation-delay:.8s;stroke-dasharray:300;stroke-dashoffset:300;animation:drawGanesha 1.5s ease .8s forwards"
+        d="M77,42 Q90,38 93,29 Q96,21 89,16 Q83,12 77,19 Q74,24 75,33"/>
+
+      <!-- === EYES === -->
+      <!-- left eye -->
+      <ellipse class="ganesh-path" cx="46" cy="30" rx="3.5" ry="2.8" stroke-width="1"
+               style="stroke-dasharray:25;stroke-dashoffset:25;animation:drawGanesha 1s ease 1s forwards"/>
+      <circle cx="46.5" cy="30" r="1.2" fill="#C9A96E" opacity=".7"
+              style="opacity:0;animation:ganeshFadeIn .4s ease 1.2s forwards"/>
+      <!-- right eye -->
+      <ellipse class="ganesh-path" cx="64" cy="30" rx="3.5" ry="2.8" stroke-width="1"
+               style="stroke-dasharray:25;stroke-dashoffset:25;animation:drawGanesha 1s ease 1s forwards"/>
+      <circle cx="64.5" cy="30" r="1.2" fill="#C9A96E" opacity=".7"
+              style="opacity:0;animation:ganeshFadeIn .4s ease 1.2s forwards"/>
+
+      <!-- third eye / tilaka mark -->
+      <path class="ganesh-path" stroke-width=".8" opacity=".7"
+            style="stroke-dasharray:30;stroke-dashoffset:30;animation:drawGanesha 0.8s ease 1.4s forwards"
+            d="M52,20 Q55,17 58,20"/>
+      <circle cx="55" cy="19" r="1.5" fill="#C9A96E" opacity=".6"
+              style="opacity:0;animation:ganeshFadeIn .3s ease 1.5s forwards"/>
+
+      <!-- === TRUNK === -->
+      <path class="ganesh-path" stroke-width="1.05" style="animation-delay:.6s"
+        d="M46,42 Q38,48 36,58 Q34,68 40,74 Q46,80 50,76 Q58,70 56,60 Q54,52 58,48 Q62,42 64,42"/>
+
+      <!-- trunk curl end -->
+      <path class="ganesh-path" stroke-width=".9" style="animation-delay:.9s;stroke-dasharray:60;stroke-dashoffset:60;animation:drawGanesha 1s ease .9s forwards"
+        d="M40,74 Q36,80 40,84 Q44,88 48,84 Q50,80 48,76"/>
+
+      <!-- === TUSK (one visible) === -->
+      <path class="ganesh-path" stroke-width=".85" opacity=".8" style="animation-delay:.7s;stroke-dasharray:80;stroke-dashoffset:80;animation:drawGanesha 1.2s ease .7s forwards"
+        d="M64,44 Q72,50 74,62 Q75,70 70,74 Q66,76 64,72"/>
+
+      <!-- broken tusk stub (left) -->
+      <path class="ganesh-path" stroke-width=".75" opacity=".6" style="animation-delay:.7s;stroke-dasharray:30;stroke-dashoffset:30;animation:drawGanesha .8s ease .7s forwards"
+        d="M46,44 Q40,50 38,56"/>
+
+      <!-- === ARMS === -->
+      <!-- upper left arm -->
+      <path class="ganesh-path" stroke-width="1" style="animation-delay:.4s"
+        d="M36,60 Q22,58 16,68 Q12,76 18,82 Q24,86 30,80"/>
+      <!-- hand gesture (abhaya mudra) - open palm suggestion -->
+      <path class="ganesh-path" stroke-width=".75" opacity=".75" style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawGanesha 1s ease 1.6s forwards"
+        d="M18,82 Q14,88 16,94 Q18,98 22,96 Q26,98 28,94 Q30,90 28,86"/>
+
+      <!-- upper right arm -->
+      <path class="ganesh-path" stroke-width="1" style="animation-delay:.4s"
+        d="M74,60 Q88,58 94,68 Q98,76 92,82 Q86,86 80,80"/>
+      <!-- right hand holding modak -->
+      <path class="ganesh-path" stroke-width=".75" opacity=".75" style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawGanesha 1s ease 1.6s forwards"
+        d="M92,82 Q98,86 96,94 Q94,100 88,98 Q82,96 82,88 Q82,82 88,80"/>
+      <!-- modak shape -->
+      <path class="ganesh-path" stroke-width=".65" opacity=".6" style="stroke-dasharray:40;stroke-dashoffset:40;animation:drawGanesha .8s ease 2s forwards"
+        d="M88,80 Q92,74 96,76 Q100,80 96,84 Q92,88 88,86 Q84,82 88,80 Z"/>
+
+      <!-- === LOWER BODY / DHOTI folds === -->
+      <path class="ganesh-path" stroke-width=".7" opacity=".5" style="stroke-dasharray:200;stroke-dashoffset:200;animation:drawGanesha 1.5s ease 2s forwards"
+        d="M38,98 Q36,106 40,114 M44,102 Q42,110 46,118 M66,102 Q68,110 64,118 M72,98 Q74,106 70,114"/>
+
+      <!-- === LOTUS BASE === -->
+      <path class="ganesh-path" stroke-width=".8" opacity=".6" style="stroke-dasharray:300;stroke-dashoffset:300;animation:drawGanesha 1.5s ease 2.5s forwards"
+        d="M38,140 Q35,134 40,132 Q45,130 50,134 Q53,130 55,128 Q57,130 60,134 Q65,130 70,132 Q75,134 72,140 Z"/>
+      <path class="ganesh-path" stroke-width=".7" opacity=".4" style="stroke-dasharray:200;stroke-dashoffset:200;animation:drawGanesha 1.2s ease 2.8s forwards"
+        d="M40,140 Q36,142 38,146 Q42,148 55,148 Q68,148 72,146 Q74,142 70,140"/>
+    </svg>
+  </div>
 
   <div class="hero-ornament">
     <svg width="150" height="26" viewBox="0 0 150 26" fill="none">
