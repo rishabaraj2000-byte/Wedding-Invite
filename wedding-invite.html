@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishabaraj & Sneha · Wedding</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold:       #C9A96E;
+  --gold-light: #E8D5A3;
+  --gold-dark:  #7A5C1E;
+  --cream:      #FDF8F0;
+  --deep-brown: #2C1810;
+  --soft-brown: #5C3D2E;
+  --muted:      #7A5C44;
+  --section-bg: #F9F3E8;
+  --bgold:      rgba(201,169,110,0.30);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--deep-brown);
+  overflow-x: hidden;
+}
+
+/* subtle ambient glow */
+body::before {
+  content:'';
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 22% 18%, rgba(201,169,110,.09) 0%, transparent 52%),
+    radial-gradient(ellipse at 80% 82%, rgba(139,105,20,.07) 0%, transparent 52%);
+}
+
+/* ────────────────────────────────────────────
+   FIXED BORDER FRAME
+   ──────────────────────────────────────────── */
+#border-frame {
+  position:fixed;inset:0;pointer-events:none;z-index:900;
+  overflow:hidden;
+}
+#border-frame svg { display:block;width:100%;height:100%; }
+
+@keyframes drawBorder { to { stroke-dashoffset: 0; } }
+@keyframes fadeIn     { to { opacity: 1; } }
+@keyframes fadeInUp   { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes letterUp   { to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes growLine   { to { transform:scaleX(1); } }
+@keyframes stemPulse  {
+  0%,100%{opacity:.8;transform:translateY(0)}
+  50%    {opacity:.3;transform:translateY(5px)}
+}
+
+/* ────────────────────────────────────────────
+   HERO
+   ──────────────────────────────────────────── */
+section, footer { position:relative; z-index:1; }
+
+#hero {
+  min-height:100svh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:90px 52px 70px;
+  text-align:center;
+  background:
+    radial-gradient(ellipse 85% 60% at 50% 32%, rgba(201,169,110,.10) 0%,transparent 68%),
+    var(--cream);
+  overflow:hidden;
+}
+#hero::after {
+  content:'';position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(560px,120vw);height:min(560px,120vw);
+  background:radial-gradient(circle,rgba(201,169,110,.05) 0%,transparent 68%);
+  border-radius:50%;pointer-events:none;
+}
+
+.hero-ornament {
+  margin-bottom:28px;
+  opacity:0;
+  animation:fadeInDown 0.9s ease forwards;
+}
+
+.hero-names-block {
+  display:flex;flex-direction:column;
+  align-items:center;gap:2px;
+}
+
+.name-line {
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(54px,15vw,92px);
+  color:var(--deep-brown);
+  text-shadow:1px 3px 10px rgba(44,24,16,.16),0 1px 3px rgba(44,24,16,.10);
+  line-height:1.08;letter-spacing:1px;
+  min-height:1.1em;
+}
+.name-line span {
+  display:inline-block;
+  opacity:0;transform:translateY(10px) scale(0.94);
+  animation:letterUp .5s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+.weds-row {
+  display:flex;align-items:center;gap:14px;
+  width:min(290px,74vw);
+  margin:10px 0 8px;
+  opacity:0;
+}
+.weds-row .wline {
+  flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0);transform-origin:center;
+}
+.weds-row .wlabel {
+  font-family:'Playfair Display',serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:.38em;
+  color:var(--gold-dark);text-transform:uppercase;white-space:nowrap;
+}
+
+.hero-divider {
+  width:160px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:20px auto 0;opacity:0;
+}
+.hero-date {
+  margin-top:16px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(14px,3.8vw,17px);font-weight:300;
+  letter-spacing:.2em;color:var(--soft-brown);text-transform:uppercase;
+  opacity:0;
+}
+
+.hero-scroll {
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  opacity:0;display:flex;flex-direction:column;align-items:center;gap:5px;
+}
+.scroll-stem {
+  width:1px;height:20px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:stemPulse 2s ease-in-out infinite;
+}
+.scroll-gem {
+  width:5px;height:5px;background:var(--gold);
+  transform:rotate(45deg);opacity:.7;
+  animation:stemPulse 2s ease-in-out .3s infinite;
+}
+
+/* ────────────────────────────────────────────
+   SCROLL REVEAL
+   ──────────────────────────────────────────── */
+.reveal {
+  opacity:0;transform:translateY(26px);
+  transition:opacity .95s cubic-bezier(.16,1,.3,1),
+             transform .95s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.10s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}
+
+/* ────────────────────────────────────────────
+   SHARED SECTION TYPOGRAPHY
+   ──────────────────────────────────────────── */
+.eyebrow {
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold-dark);margin-bottom:6px;
+}
+.sec-title {
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,7vw,34px);font-weight:400;
+  color:var(--deep-brown);margin-bottom:32px;letter-spacing:.02em;
+}
+.thin-line {
+  width:56px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:10px auto;
+}
+
+/* ────────────────────────────────────────────
+   INVITE TEXT
+   ──────────────────────────────────────────── */
+#invite-text {
+  padding:64px 40px;text-align:center;
+  background:linear-gradient(180deg,var(--cream) 0%,rgba(201,169,110,.05) 50%,var(--cream) 100%);
+}
+.om-glyph{font-size:22px;color:var(--gold);opacity:.55;margin-bottom:2px}
+.invite-body {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,4.4vw,20px);font-weight:300;font-style:italic;
+  line-height:1.82;color:var(--soft-brown);
+  max-width:320px;margin:16px auto 0;letter-spacing:.015em;
+}
+.open-q {
+  font-size:2.8em;line-height:0;vertical-align:-.45em;
+  color:var(--gold);font-family:'Great Vibes',cursive;margin-right:2px;
+}
+
+/* ────────────────────────────────────────────
+   FAMILIES
+   ──────────────────────────────────────────── */
+#families {
+  padding:60px 28px;
+  background:linear-gradient(135deg,rgba(201,169,110,.055) 0%,transparent 60%),var(--section-bg);
+}
+.fam-grid{display:grid;gap:16px;max-width:380px;margin:0 auto}
+.fam-card {
+  background:rgba(255,255,255,.68);
+  border:1px solid var(--bgold);border-radius:14px;
+  padding:26px 22px;text-align:center;
+}
+.fam-tag {
+  font-family:'Playfair Display',serif;font-size:9.5px;font-weight:500;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dark);
+  margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.fam-tag::before,.fam-tag::after{
+  content:'';width:22px;height:1px;background:var(--gold);opacity:.45;
+}
+.fam-names {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,4.4vw,18px);font-weight:400;
+  color:var(--deep-brown);line-height:1.75;
+}
+.late{font-size:.72em;color:var(--muted);font-style:italic;letter-spacing:.05em}
+
+/* ────────────────────────────────────────────
+   EVENTS
+   ──────────────────────────────────────────── */
+#events{padding:60px 28px}
+.ev-grid{display:grid;gap:14px;max-width:380px;margin:0 auto}
+.ev-card {
+  border:1px solid var(--bgold);border-radius:14px;
+  padding:26px 22px;
+  background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(253,248,240,.55));
+  position:relative;overflow:hidden;
+  display:flex;align-items:flex-start;gap:20px;
+}
+.ev-card::before {
+  content:'';position:absolute;top:0;left:0;
+  width:3px;height:100%;
+  background:linear-gradient(180deg,var(--gold),var(--gold-light),var(--gold));
+}
+.ev-date{text-align:center;min-width:50px}
+.ev-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:300;color:var(--gold-dark);line-height:1;
+}
+.ev-mon {
+  font-family:'Playfair Display',serif;font-size:9.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+  font-weight:500;margin-top:2px;
+}
+.ev-info{flex:1;padding-top:4px}
+.ev-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(20px,5.5vw,24px);font-weight:400;
+  color:var(--deep-brown);margin-bottom:5px;
+}
+.ev-time{font-family:'Playfair Display',serif;font-size:12px;color:var(--muted);letter-spacing:.04em}
+
+/* ────────────────────────────────────────────
+   VENUE
+   ──────────────────────────────────────────── */
+#venue {
+  padding:60px 28px;text-align:center;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 100%,rgba(201,169,110,.09) 0%,transparent 70%),
+    var(--section-bg);
+}
+.venue-card {
+  max-width:380px;margin:0 auto;
+  background:rgba(255,255,255,.70);
+  border:1px solid var(--bgold);border-radius:16px;
+  padding:34px 26px;
+}
+.venue-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,6vw,27px);font-weight:400;
+  color:var(--deep-brown);margin-bottom:10px;line-height:1.3;
+}
+.venue-addr {
+  font-family:'Playfair Display',serif;font-size:13px;
+  color:var(--muted);line-height:1.75;margin-bottom:26px;
+}
+.map-btn {
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 30px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:#fff;text-decoration:none;border-radius:50px;
+  font-family:'Playfair Display',serif;font-size:13px;font-weight:500;
+  letter-spacing:.08em;
+  box-shadow:0 4px 18px rgba(122,92,30,.28);
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.map-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(122,92,30,.36)}
+.map-btn:active{transform:translateY(0)}
+
+/* ────────────────────────────────────────────
+   FOOTER
+   ──────────────────────────────────────────── */
+footer {
+  padding:44px 28px 60px;text-align:center;
+  border-top:1px solid var(--bgold);
+}
+.footer-script {
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(30px,9vw,44px);
+  color:var(--gold-dark);margin-bottom:8px;
+  text-shadow:1px 2px 6px rgba(44,24,16,.09);
+}
+.footer-sub {
+  font-family:'Cormorant Garamond',serif;
+  font-size:12px;font-weight:300;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+}
+</style>
+</head>
+<body>
+
+<!-- ══ FIXED ANIMATED BORDER FRAME ══ -->
+<div id="border-frame"></div>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+
+  <div class="hero-ornament">
+    <svg width="150" height="26" viewBox="0 0 150 26" fill="none">
+      <line x1="0" y1="13" x2="50" y2="13" stroke="#C9A96E" stroke-width=".7" opacity=".55"/>
+      <circle cx="57" cy="13" r="1.8" fill="#C9A96E" opacity=".6"/>
+      <circle cx="75" cy="13" r="4" stroke="#C9A96E" stroke-width=".8" fill="none" opacity=".65"/>
+      <circle cx="75" cy="13" r="1.4" fill="#C9A96E" opacity=".65"/>
+      <circle cx="93" cy="13" r="1.8" fill="#C9A96E" opacity=".6"/>
+      <line x1="100" y1="13" x2="150" y2="13" stroke="#C9A96E" stroke-width=".7" opacity=".55"/>
+      <path d="M75 3 Q79 8 75 13 Q71 8 75 3" stroke="#C9A96E" stroke-width=".6" fill="none" opacity=".4"/>
+      <path d="M75 23 Q79 18 75 13 Q71 18 75 23" stroke="#C9A96E" stroke-width=".6" fill="none" opacity=".4"/>
+    </svg>
+  </div>
+
+  <div class="hero-names-block">
+    <div class="name-line" id="nameGroom"></div>
+
+    <div class="weds-row" id="wedsRow">
+      <div class="wline"></div>
+      <span class="wlabel">Weds</span>
+      <div class="wline"></div>
+    </div>
+
+    <div class="name-line" id="nameBride"></div>
+  </div>
+
+  <div class="hero-divider" id="heroDivider"></div>
+  <p class="hero-date" id="heroDate">May 25, 2026 &nbsp;·&nbsp; Chennai</p>
+
+  <div class="hero-scroll" id="heroScroll">
+    <div class="scroll-stem"></div>
+    <div class="scroll-gem"></div>
+  </div>
+</section>
+
+<!-- ══ INVITE TEXT ══ -->
+<section id="invite-text">
+  <div class="reveal">
+    <div class="om-glyph">ॐ</div>
+    <div class="thin-line"></div>
+  </div>
+  <p class="invite-body reveal d1">
+    <span class="open-q">"</span>With the blessings of our families, we invite you to celebrate our union and share in the joy of this special occasion.
+  </p>
+  <div class="thin-line reveal d2" style="margin-top:18px"></div>
+</section>
+
+<!-- ══ FAMILIES ══ -->
+<section id="families">
+  <p class="eyebrow reveal">Together With Their Families</p>
+  <h2 class="sec-title reveal d1">Our Beloved Parents</h2>
+  <div class="fam-grid">
+    <div class="fam-card reveal d1">
+      <div class="fam-tag">Groom's Parents</div>
+      <p class="fam-names">Thiyagarajan K<br>Sathya Bama S</p>
+    </div>
+    <div class="fam-card reveal d2">
+      <div class="fam-tag">Bride's Parents</div>
+      <p class="fam-names"><span class="late">Late</span> Vinayagam N<br>Padmini E</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EVENTS ══ -->
+<section id="events">
+  <p class="eyebrow reveal">Mark Your Calendar</p>
+  <h2 class="sec-title reveal d1">Celebrations</h2>
+  <div class="ev-grid">
+    <div class="ev-card reveal d1">
+      <div class="ev-date"><div class="ev-num">24</div><div class="ev-mon">May '26</div></div>
+      <div class="ev-info"><h3 class="ev-name">Reception</h3><p class="ev-time">6:30 PM onwards</p></div>
+    </div>
+    <div class="ev-card reveal d2">
+      <div class="ev-date"><div class="ev-num">25</div><div class="ev-mon">May '26</div></div>
+      <div class="ev-info"><h3 class="ev-name">Wedding</h3><p class="ev-time">9:00 AM – 10:30 AM</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VENUE ══ -->
+<section id="venue">
+  <p class="eyebrow reveal">Where We Celebrate</p>
+  <h2 class="sec-title reveal d1">Venue</h2>
+  <div class="venue-card reveal d2">
+    <div style="margin:0 auto 18px;display:flex;align-items:center;justify-content:center">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <path d="M17 3C11.5 3 7 7.5 7 13c0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4.5-10-10-10z"
+              stroke="#C9A96E" stroke-width="1.1" fill="rgba(201,169,110,.10)"/>
+        <circle cx="17" cy="13" r="2.8" stroke="#C9A96E" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+    <h3 class="venue-name">Laxmi Narayan Mahal</h3>
+    <p class="venue-addr">19, Mudichur Road<br>Old Perungalathur<br>Chennai – 600 063</p>
+    <a class="map-btn"
+       href="https://www.google.com/maps/search/?api=1&query=Laxmi+Narayan+Mahal+Old+Perungalathur+Chennai"
+       target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M6.5 1C4 1 2 3 2 5.5c0 3.5 4.5 7 4.5 7s4.5-3.5 4.5-7C11 3 9 1 6.5 1z"
+              stroke="#fff" stroke-width="1.1" fill="none"/>
+        <circle cx="6.5" cy="5.5" r="1.4" fill="#fff"/>
+      </svg>
+      Open Location
+    </a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="reveal">
+    <svg width="110" height="14" viewBox="0 0 110 14" fill="none" style="display:block;margin:0 auto 20px">
+      <line x1="0" y1="7" x2="38" y2="7" stroke="#C9A96E" stroke-width=".7" opacity=".45"/>
+      <circle cx="44" cy="7" r="1.4" fill="#C9A96E" opacity=".5"/>
+      <path d="M55 1 L58 7 L55 13 L52 7 Z" stroke="#C9A96E" stroke-width=".7" fill="rgba(201,169,110,.15)"/>
+      <circle cx="66" cy="7" r="1.4" fill="#C9A96E" opacity=".5"/>
+      <line x1="72" y1="7" x2="110" y2="7" stroke="#C9A96E" stroke-width=".7" opacity=".45"/>
+    </svg>
+    <div class="footer-script">Rishabaraj &amp; Sneha</div>
+    <p class="footer-sub">May 25, 2026 &nbsp;·&nbsp; Chennai</p>
+  </div>
+</footer>
+
+<script>
+/* ══ BORDER FRAME — built with JS so perimeter = exact dasharray ══ */
+/* ══ RANGOLI BORDER ══
+   Architecture:
+   • Two thin rule lines (outer at 10px, inner at 28px) that draw in
+   • A 18px-wide tile band between them filled with repeating rangoli motifs
+   • Elaborate 54×54 rangoli corner medallions at each corner
+   The tile band runs along all four edges, clipped to avoid corners.
+   Corners are standalone SVG groups rotated into position.
+*/
+function buildFrame() {
+  const W = window.innerWidth, H = window.innerHeight;
+
+  // ── geometry constants ──
+  const O  = 10;   // outer rule inset from edge
+  const I  = 28;   // inner rule inset from edge
+  const BW = I - O; // band width = 18px
+  const CS = 54;   // corner square size (the medallion fits inside CS×CS)
+
+  // ── perimeter lengths for dash-draw animation ──
+  const pOuter = 2*(W - 2*O + H - 2*O);
+  const pInner = 2*(W - 2*I + H - 2*I);
+
+  // ── ONE rangoli tile (18px tall, 22px wide) ──
+  // Motif: centre diamond + side petals + dots
+  // Designed to tile horizontally seamlessly
+  const TILE_W = 22;
+  const TILE_H = BW; // 18
+
+  const rangolTile = `
+  <symbol id="rt" viewBox="0 0 ${TILE_W} ${TILE_H}" overflow="visible">
+    <!-- centre diamond -->
+    <polygon points="${TILE_W/2},2 ${TILE_W/2+4},${TILE_H/2} ${TILE_W/2},${TILE_H-2} ${TILE_W/2-4},${TILE_H/2}"
+             fill="rgba(201,169,110,.18)" stroke="#C9A96E" stroke-width=".7" opacity=".9"/>
+    <!-- inner dot -->
+    <circle cx="${TILE_W/2}" cy="${TILE_H/2}" r="1.2" fill="#C9A96E" opacity=".75"/>
+    <!-- left petal -->
+    <path d="M1,${TILE_H/2} Q${TILE_W/2-5},${TILE_H/2-4} ${TILE_W/2-4},${TILE_H/2}
+             Q${TILE_W/2-5},${TILE_H/2+4} 1,${TILE_H/2} Z"
+          fill="rgba(201,169,110,.12)" stroke="#C9A96E" stroke-width=".55" opacity=".8"/>
+    <!-- right petal -->
+    <path d="M${TILE_W-1},${TILE_H/2} Q${TILE_W/2+5},${TILE_H/2-4} ${TILE_W/2+4},${TILE_H/2}
+             Q${TILE_W/2+5},${TILE_H/2+4} ${TILE_W-1},${TILE_H/2} Z"
+          fill="rgba(201,169,110,.12)" stroke="#C9A96E" stroke-width=".55" opacity=".8"/>
+    <!-- top dot -->
+    <circle cx="${TILE_W/2}" cy="1.5" r=".9" fill="#C9A96E" opacity=".5"/>
+    <!-- bottom dot -->
+    <circle cx="${TILE_W/2}" cy="${TILE_H-1.5}" r=".9" fill="#C9A96E" opacity=".5"/>
+  </symbol>`;
+
+  // ── tile strip builder ──
+  // strips along top/bottom edges (horizontal), left/right (vertical via rotate)
+  // We leave CS px gap at each end for corners
+  function hStrip(x1, y, length) {
+    const count = Math.ceil(length / TILE_W) + 1;
+    let s = `<g>`;
+    for (let i = 0; i < count; i++) {
+      s += `<use href="#rt" x="${x1 + i*TILE_W}" y="${y}"/>`;
+    }
+    s += `</g>`;
+    return s;
+  }
+
+  // vertical strip = horizontal strip rotated 90° around its midpoint
+  function vStrip(x, y1, length) {
+    const midX = x + TILE_H/2;
+    const midY = y1 + length/2;
+    const count = Math.ceil(length / TILE_W) + 1;
+    let s = `<g transform="rotate(90,${midX},${midY})">`;
+    for (let i = 0; i < count; i++) {
+      s += `<use href="#rt" x="${midX - length/2 + i*TILE_W}" y="${midY - TILE_H/2}"/>`;
+    }
+    s += `</g>`;
+    return s;
+  }
+
+  // usable strip length after leaving room for corner medallions
+  const hLen = W - 2*CS;
+  const vLen = H - 2*CS;
+
+  // ── rangoli corner medallion ──
+  // A layered kolam / rangoli rosette: concentric petals, rings, dots
+  function corner(tx, ty, rot) {
+    const r = CS/2; // 27
+    return `
+    <g transform="translate(${tx},${ty}) rotate(${rot})"
+       style="opacity:0;animation:fadeIn .7s ease forwards">
+      <!-- outer petal ring (8 petals) -->
+      ${[0,45,90,135,180,225,270,315].map(a => `
+        <path transform="rotate(${a})"
+          d="M0,-${r*0.9} Q${r*0.22},-${r*0.55} 0,-${r*0.42} Q-${r*0.22},-${r*0.55} 0,-${r*0.9} Z"
+          fill="rgba(201,169,110,.16)" stroke="#C9A96E" stroke-width=".65" opacity=".85"/>`).join('')}
+      <!-- mid diamond ring (4) -->
+      ${[0,90,180,270].map(a => `
+        <path transform="rotate(${a})"
+          d="M0,-${r*0.55} Q${r*0.16},-${r*0.35} 0,-${r*0.24} Q-${r*0.16},-${r*0.35} 0,-${r*0.55} Z"
+          fill="rgba(201,169,110,.22)" stroke="#C9A96E" stroke-width=".7" opacity=".9"/>`).join('')}
+      <!-- mid ring -->
+      <circle r="${r*0.48}" fill="none" stroke="#C9A96E" stroke-width=".6" opacity=".45"/>
+      <!-- inner petal ring (4 petals, 45° offset) -->
+      ${[45,135,225,315].map(a => `
+        <path transform="rotate(${a})"
+          d="M0,-${r*0.38} Q${r*0.12},-${r*0.22} 0,-${r*0.14} Q-${r*0.12},-${r*0.22} 0,-${r*0.38} Z"
+          fill="rgba(201,169,110,.28)" stroke="#C9A96E" stroke-width=".65"/>`).join('')}
+      <!-- small ring -->
+      <circle r="${r*0.26}" fill="rgba(201,169,110,.08)" stroke="#C9A96E" stroke-width=".6" opacity=".6"/>
+      <!-- dot ring (8 dots) -->
+      ${[0,45,90,135,180,225,270,315].map(a => {
+        const rad = (a-90)*Math.PI/180;
+        const dx = Math.cos(rad)*r*0.68, dy = Math.sin(rad)*r*0.68;
+        return `<circle cx="${dx.toFixed(2)}" cy="${dy.toFixed(2)}" r="1.3" fill="#C9A96E" opacity=".6"/>`;
+      }).join('')}
+      <!-- centre gem -->
+      <circle r="${r*0.13}" fill="#C9A96E" opacity=".9"/>
+      <circle r="${r*0.07}" fill="#FDF8F0" opacity=".8"/>
+    </g>`;
+  }
+
+  // corner positions: centre of each CS×CS corner block
+  const ch = CS/2;
+  const corners = [
+    { tx: O+ch,   ty: O+ch,   rot: 0,   delay:'1.55s' },
+    { tx: W-O-ch, ty: O+ch,   rot: 90,  delay:'1.65s' },
+    { tx: W-O-ch, ty: H-O-ch, rot: 180, delay:'1.75s' },
+    { tx: O+ch,   ty: H-O-ch, rot: 270, delay:'1.85s' },
+  ];
+
+  // ── clip regions so tiles don't bleed into corners ──
+  // top/bottom: x from O+CS to W-O-CS
+  // left/right: y from O+CS to H-O-CS
+  const clipDefs = `
+  <defs>
+    ${rangolTile}
+    <clipPath id="ch-top"><rect x="${O+CS}" y="${O}" width="${W-2*O-2*CS}" height="${BW}"/></clipPath>
+    <clipPath id="ch-bot"><rect x="${O+CS}" y="${H-O-BW}" width="${W-2*O-2*CS}" height="${BW}"/></clipPath>
+    <clipPath id="cv-lft"><rect x="${O}" y="${O+CS}" width="${BW}" height="${H-2*O-2*CS}"/></clipPath>
+    <clipPath id="cv-rgt"><rect x="${W-O-BW}" y="${O+CS}" width="${BW}" height="${H-2*O-2*CS}"/></clipPath>
+  </defs>`;
+
+  // ── assemble SVG ──
+  document.getElementById('border-frame').innerHTML = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    ${clipDefs}
+
+    <!-- outer rule line -->
+    <rect x="${O}" y="${O}" width="${W-2*O}" height="${H-2*O}"
+          fill="none" stroke="#C9A96E" stroke-width="1" opacity=".55"
+          stroke-dasharray="${pOuter}" stroke-dashoffset="${pOuter}"
+          style="animation:drawBorder 1.6s cubic-bezier(.4,0,.2,1) .05s forwards"/>
+
+    <!-- inner rule line -->
+    <rect x="${I}" y="${I}" width="${W-2*I}" height="${H-2*I}"
+          fill="none" stroke="#C9A96E" stroke-width=".6" opacity=".35"
+          stroke-dasharray="${pInner}" stroke-dashoffset="${pInner}"
+          style="animation:drawBorder 1.9s cubic-bezier(.4,0,.2,1) .15s forwards"/>
+
+    <!-- tile band: top -->
+    <g clip-path="url(#ch-top)"
+       style="opacity:0;animation:fadeIn .6s ease 1.55s forwards">
+      ${hStrip(O+CS, O, hLen)}
+    </g>
+
+    <!-- tile band: bottom (flipped vertically) -->
+    <g clip-path="url(#ch-bot)"
+       transform="scale(1,-1) translate(0,${-(H)})"
+       style="opacity:0;animation:fadeIn .6s ease 1.6s forwards">
+      ${hStrip(O+CS, O, hLen)}
+    </g>
+
+    <!-- tile band: left -->
+    <g clip-path="url(#cv-lft)"
+       style="opacity:0;animation:fadeIn .6s ease 1.65s forwards">
+      ${vStrip(O, O+CS, vLen)}
+    </g>
+
+    <!-- tile band: right -->
+    <g clip-path="url(#cv-rgt)"
+       style="opacity:0;animation:fadeIn .6s ease 1.7s forwards">
+      ${vStrip(W-O-BW, O+CS, vLen)}
+    </g>
+
+    <!-- corner medallions -->
+    ${corners.map(c =>
+      `<g style="animation-delay:${c.delay}">${corner(c.tx, c.ty, c.rot)}</g>`
+    ).join('')}
+  </svg>`;
+}
+buildFrame();
+let rt; window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(buildFrame,180); });
+
+/* ══ OPENING SEQUENCE ══
+   Border draws (0–1.6s)
+   → ornament (1.7s)
+   → groom letters start (2.05s)
+   → weds row (after groom done)
+   → bride letters (after weds)
+   → divider + date + scroll hint
+*/
+const GROOM = 'Rishabaraj T';
+const BRIDE  = 'Sneha V';
+const LS = 54; // letter step ms
+
+function spellOut(id, text, startMs, onDone) {
+  const el = document.getElementById(id);
+  el.innerHTML = '';
+  [...text].forEach((ch,i) => {
+    const s = document.createElement('span');
+    s.textContent = ch === ' ' ? '\u00A0' : ch;
+    s.style.animationDelay = (startMs + i*LS) + 'ms';
+    el.appendChild(s);
+  });
+  if (onDone) setTimeout(onDone, startMs + text.length*LS + 90);
+}
+
+function show(id, anim, delay) {
+  const el = typeof id === 'string' ? document.getElementById(id) : id;
+  if (!el) return;
+  el.style.animationDelay = delay + 'ms';
+  el.style.animation = anim;
+}
+
+const T_ORN   = 1700;
+const T_GROOM = 2050;
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  /* ornament */
+  const orn = document.querySelector('.hero-ornament');
+  orn.style.animationDelay = T_ORN + 'ms';
+
+  /* groom → weds row → bride → rest */
+  spellOut('nameGroom', GROOM, T_GROOM, () => {
+    const T_WEDS = 0;
+    const wr = document.getElementById('wedsRow');
+    wr.style.animation = `fadeIn .6s ease ${T_WEDS}ms forwards`;
+    wr.querySelectorAll('.wline').forEach(l => {
+      l.style.animation = `growLine .9s cubic-bezier(.4,0,.2,1) ${T_WEDS+60}ms forwards`;
+    });
+
+    const T_BRIDE = 260;
+    spellOut('nameBride', BRIDE, T_BRIDE, () => {
+      /* divider */
+      const dv = document.getElementById('heroDivider');
+      dv.style.animation = 'fadeIn .7s ease forwards';
+
+      /* date */
+      setTimeout(() => {
+        const dt = document.getElementById('heroDate');
+        dt.style.animation = 'fadeInUp .8s ease forwards';
+      }, 180);
+
+      /* scroll hint */
+      setTimeout(() => {
+        document.getElementById('heroScroll').style.animation = 'fadeIn .8s ease forwards';
+      }, 550);
+    });
+  });
+
+  /* scroll reveal for all below-fold sections */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold:.1, rootMargin:'0px 0px -36px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+});
+</script>
+</body>
+</html>
